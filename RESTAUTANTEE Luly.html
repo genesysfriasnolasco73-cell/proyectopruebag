@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Restaurante Luly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-pastel: #FFDDEB; /* rosado pastel */
+      --lilac: #BFA3FF; /* morado-lila */
+      --lilac-2: #9B7BDB;
+      --card: #FFFFFF;
+      --muted: #6B5A73;
+      --accent-text: #3B2A4B;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:var(--bg-pastel);color:var(--accent-text);min-height:100vh;}
+
+    /* Header */
+    header{width:100%;padding:22px 18px;background:linear-gradient(90deg,var(--lilac),var(--lilac-2));color:white;text-align:center;box-shadow:0 6px 20px rgba(107,84,162,0.12)}
+    header h1{margin:0;font-size:28px;letter-spacing:0.4px}
+
+    /* Layout */
+    .wrap{max-width:1100px;margin:28px auto;padding:0 16px;display:grid;grid-template-columns:320px 1fr;gap:28px;align-items:start}
+
+    /* Left column: categories + login */
+    .panel{background:linear-gradient(180deg,#F6F0FF, #F9F7FF);border-radius:16px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+    .categories{background:var(--lilac);border-radius:12px;padding:18px;color:white}
+    .categories h2{margin:0 0 10px 0;font-size:20px}
+    .cat-list{list-style:none;padding:0;margin:0}
+    .cat-list li{background:rgba(255,255,255,0.06);padding:10px 12px;border-radius:10px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+
+    /* Login box */
+    .login{margin-top:18px;background:var(--card);border-radius:12px;padding:14px}
+    .login h3{margin:0 0 8px 0;font-size:16px}
+    .form-group{margin-bottom:10px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input, select{width:100%;padding:10px;border-radius:8px;border:1px solid #ECE6F9;background:#FFF;font-size:14px}
+    .login button{width:100%;padding:10px;border-radius:8px;border:0;background:linear-gradient(90deg,var(--lilac),var(--lilac-2));color:white;font-weight:600;cursor:pointer;margin-top:8px}
+
+    /* Right column: menu */
+    .menu-card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 8px 30px rgba(0,0,0,0.06)}
+    .menu-header{display:flex;justify-content:space-between;align-items:center}
+    .menu-header h2{margin:0;font-size:20px}
+    .search{display:flex;gap:8px}
+    .search input{padding:8px;border-radius:8px;border:1px solid #EEE}
+
+    .menu-section{margin-top:16px}
+    .menu-section h3{margin:12px 0 8px 0;color:var(--muted);font-size:16px}
+    .dish{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;border:1px solid #F2EDF8;margin-bottom:10px}
+    .dish .info{display:flex;flex-direction:column}
+    .dish .name{font-weight:600}
+    .dish .desc{font-size:13px;color:var(--muted)}
+    .dish .right{display:flex;gap:12px;align-items:center}
+    .price{font-weight:700}
+    .add-btn{padding:8px 10px;border-radius:8px;border:0;background:var(--lilac);color:white;cursor:pointer}
+
+    /* Orders panel */
+    .orders{margin-top:18px;background:#FFF6FB;border-radius:12px;padding:12px}
+    .orders h4{margin:0 0 8px 0}
+    .order-list{list-style:none;padding:0;margin:0}
+    .order-list li{display:flex;justify-content:space-between;padding:8px 10px;border-radius:8px;background:white;margin-bottom:8px}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .wrap{grid-template-columns:1fr;}
+      header h1{font-size:22px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Restaurante Luly</h1>
+  </header>
+
+  <div class="wrap">
+    <!-- LEFT COLUMN -->
+    <div>
+      <div class="panel">
+        <div class="categories" role="region" aria-label="Categorías">
+          <h2>Categorías</h2>
+          <ul class="cat-list">
+            <li data-cat="entradas">Entradas</li>
+            <li data-cat="platos">Platos Fuertes</li>
+            <li data-cat="postres">Postres</li>
+            <li data-cat="bebidas">Bebidas</li>
+          </ul>
+        </div>
+
+        <div class="login" aria-label="Login de usuario">
+          <h3>Iniciar sesión</h3>
+          <div class="form-group">
+            <label for="user">Usuario</label>
+            <input id="user" type="text" placeholder="nombre de usuario">
+          </div>
+          <div class="form-group">
+            <label for="pass">Clave</label>
+            <input id="pass" type="password" placeholder="contraseña">
+          </div>
+          <div class="form-group">
+            <label for="mesa">Mesa</label>
+            <input id="mesa" type="text" placeholder="N° de mesa">
+          </div>
+          <div class="form-group">
+            <label for="pedidos">Pedidos (opcional)</label>
+            <select id="pedidos">
+              <option value="ninguno">Ninguno</option>
+              <option value="para llevar">Para llevar</option>
+              <option value="consumo en local">Consumo en local</option>
+            </select>
+          </div>
+          <button id="loginBtn">Entrar</button>
+          <p style="font-size:13px;color:var(--muted);margin-top:8px;text-align:center">(Demo: el botón no valida contra servidor)</p>
+        </div>
+
+        <div class="orders" aria-live="polite">
+          <h4>Pedidos</h4>
+          <ul class="order-list" id="orderList">
+            <li style="color:var(--muted);">No hay pedidos aún</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <div class="menu-card">
+        <div class="menu-header">
+          <h2>Menú</h2>
+          <div class="search">
+            <input id="search" type="text" placeholder="Buscar plato...">
+          </div>
+        </div>
+
+        <!-- Entradas -->
+        <div class="menu-section" data-section="entradas">
+          <h3>Entradas</h3>
+          <div class="dish" data-name="Bruschetta">
+            <div class="info">
+              <div class="name">Bruschetta</div>
+              <div class="desc">Pan tostado, tomate y albahaca</div>
+            </div>
+            <div class="right">
+              <div class="price">RD$ 150</div>
+              <button class="add-btn">Añadir</button>
+            </div>
+          </div>
+
+          <div class="dish" data-name="Ensalada César">
+            <div class="info">
+              <div class="name">Ensalada César</div>
+              <div class="desc">Lechuga, croutons, aderezo César</div>
+            </div>
+            <div class="right">
+              <div class="price">RD$ 180</div>
+              <button class="add-btn">Añadir</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Platos Fuertes -->
+        <div class="menu-section" data-section="platos">
+          <h3>Platos Fuertes</h3>
+          <div class="dish" data-name="Pollo al Ajillo">
+            <div class="info">
+              <div class="name">Pollo al Ajillo</div>
+              <div class="desc">Acompañado de arroz y vegetales</div>
+            </div>
+            <div class="right">
+              <div class="price">RD$ 420</div>
+              <button class="add-btn">Añadir</button>
+            </div>
+          </div>
+
+          <div class="dish" data-name="Filete de Res">
+            <div class="info">
+              <div class="name">Filete de Res</div>
+              <div class="desc">Corte premium, papas al horno</div>
+            </div>
+            <div class="right">
+              <div class="price">RD$ 650</div>
+              <button class="add-btn">Añadir</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Postres -->
+        <div class="menu-section" data-section="postres">
+          <h3>Postres</h3>
+          <div class="dish" data-name="Cheesecake">
+            <div class="info">
+              <div class="name">Cheesecake</div>
+              <div class="desc">Con salsa de frutos rojos</div>
+            </div>
+            <div class="right">
+              <div class="price">RD$ 220</div>
+              <button class="add-btn">Añadir</button>
+            </div>
+          </div>
+
+          <div class="dish" data-name="Helado Artesanal">
+            <div class="info">
+              <div class="name">Helado Artesanal</div>
+              <div class="desc">2 bolas a elegir</div>
+            </div>
+            <div class="right">
+              <div class="price">RD$ 120</div>
+              <button class="add-btn">Añadir</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bebidas -->
+        <div class="menu-section" data-section="bebidas">
+          <h3>Bebidas</h3>
+          <div class="dish" data-name="Limonada Natural">
+            <div class="info">
+              <div class="name">Limonada Natural</div>
+              <div class="desc">Refrescante</div>
+            </div>
+            <div class="right">
+              <div class="price">RD$ 90</div>
+              <button class="add-btn">Añadir</button>
+            </div>
+          </div>
+
+          <div class="dish" data-name="Café Expreso">
+            <div class="info">
+              <div class="name">Café Expreso</div>
+              <div class="desc">Pequeña taza</div>
+            </div>
+            <div class="right">
+              <div class="price">RD$ 80</div>
+              <button class="add-btn">Añadir</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple interactivity: filter by category and add to orders
+    const catItems = document.querySelectorAll('.cat-list li');
+    const sections = document.querySelectorAll('.menu-section');
+    const addButtons = document.querySelectorAll('.add-btn');
+    const orderList = document.getElementById('orderList');
+    const searchInput = document.getElementById('search');
+
+    catItems.forEach(li => {
+      li.addEventListener('click', () => {
+        const cat = li.dataset.cat;
+        sections.forEach(sec => {
+          sec.style.display = sec.dataset.section === cat ? 'block' : 'none';
+        });
+      });
+    });
+
+    // Initially show all sections
+    sections.forEach(s => s.style.display = 'block');
+
+    // Add to orders
+    function addOrder(name, price){
+      // remove placeholder if exists
+      if(orderList.children.length === 1 && orderList.children[0].innerText.includes('No hay')){
+        orderList.innerHTML = '';
+      }
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${name}</span><strong>${price}</strong>`;
+      orderList.appendChild(li);
+    }
+
+    addButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const dish = e.target.closest('.dish');
+        const name = dish.dataset.name;
+        const price = dish.querySelector('.price').innerText;
+        addOrder(name, price);
+      });
+    });
+
+    // Search
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase();
+      document.querySelectorAll('.dish').forEach(d => {
+        const name = d.dataset.name.toLowerCase();
+        d.style.display = name.includes(q) ? 'flex' : 'none';
+      });
+    });
+
+    // Login button demo
+    document.getElementById('loginBtn').addEventListener('click', () => {
+      const user = document.getElementById('user').value.trim();
+      const pass = document.getElementById('pass').value.trim();
+      const mesa = document.getElementById('mesa').value.trim();
+      if(!user || !pass){
+        alert('Introduce usuario y clave (demo)');
+        return;
+      }
+      alert(`Sesión iniciada como ${user} - Mesa: ${mesa || 'No especificada'}`);
+    });
+  </script>
+</body>
+</html>
+
